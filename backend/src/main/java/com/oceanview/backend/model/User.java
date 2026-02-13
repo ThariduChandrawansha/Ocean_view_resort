@@ -17,4 +17,6 @@ public class User {
     private String password;
     private String name;
     private Role role;
+    private String resetPasswordToken;
+    private Long resetPasswordTokenExpiry;
 }

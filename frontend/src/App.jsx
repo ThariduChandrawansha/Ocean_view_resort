@@ -1,69 +1,56 @@
-import { useState } from 'react'
-import axios from 'axios'
+import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom'
+import { AuthProvider } from './context/AuthContext'
 import Header from './components/Header'
 import Footer from './components/Footer'
-import { Database, ShieldCheck, ShieldAlert, Loader2 } from 'lucide-react'
+import Login from './pages/Login'
+import Register from './pages/Register'
+import Profile from './pages/Profile'
+import AdminDashboard from './pages/AdminDashboard'
+import ForgotPassword from './pages/ForgotPassword'
+import ResetPassword from './pages/ResetPassword'
 
-function App() {
-  const [status, setStatus] = useState(null)
-  const [loading, setLoading] = useState(false)
-  const [dbName, setDbName] = useState('')
-
-  const checkConnection = async () => {
-    setLoading(true)
-    setStatus(null)
-    try {
-      const response = await axios.get('http://localhost:8080/api/db-check')
-      setStatus(response.data.status)
-      if (response.data.status === 'success') {
-        setDbName(response.data.database)
-      }
-    } catch (error) {
-      console.error('Connection check failed:', error)
-      setStatus('error')
-    } finally {
-      setLoading(false)
-    }
-  }
-
+function Landing() {
   return (
     <>
       <Header />
-      <main className="app-container">
-        <div className="status-card">
-          <Database size={48} className="icon-main" style={{ marginBottom: '1rem', color: '#38bdf8' }} />
-          <h1>Database Connection Test</h1>
-          <p style={{ color: '#94a3b8', marginBottom: '2rem' }}>
-            Check the connection status between the React frontend and Spring Boot backend with MongoDB.
+      <div className="app-container">
+        <div className="status-card" style={{padding: '3rem', textAlign: 'center'}}>
+          <h1 style={{fontSize: '2.5rem', marginBottom: '1.5rem', background: 'linear-gradient(135deg, #0ea5e9, #3b82f6)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent'}}>
+            Experience Luxury
+          </h1>
+          <p style={{fontSize: '1.1rem', color: '#64748b', marginBottom: '2rem'}}>
+            Welcome to Ocean View Resort, where paradise meets comfort.
           </p>
-          
-          <div style={{ marginBottom: '2rem' }}>
-            {loading ? (
-              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.5rem' }}>
-                <Loader2 className="animate-spin" /> Checking connection...
-              </div>
-            ) : status === 'success' ? (
-              <div className="status-success">
-                <ShieldCheck style={{ display: 'inline', marginRight: '0.5rem' }} />
-                Connected to {dbName}!
-              </div>
-            ) : status === 'error' ? (
-              <div className="status-error">
-                <ShieldAlert style={{ display: 'inline', marginRight: '0.5rem' }} />
-                Connection failed. Is the backend running?
-              </div>
-            ) : (
-              <p>Click the button below to test connection.</p>
-            )}
-          </div>
-
-          <button className="btn" onClick={checkConnection} disabled={loading}>
-            Test Connection
-          </button>
+          <a href="/login" className="btn btn-primary" style={{textDecoration: 'none', display: 'inline-block'}}>
+            Book Your Stay
+          </a>
         </div>
-      </main>
+      </div>
       <Footer />
     </>
+  )
+}
+
+function App() {
+  return (
+    <AuthProvider>
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={<Landing />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/register" element={<Register />} />
+          <Route path="/forgot-password" element={<ForgotPassword />} />
+          <Route path="/reset-password" element={<ResetPassword />} />
+          
+          {/* Protected Routes */}
+          <Route path="/profile" element={<Profile />} />
+          <Route path="/admin/dashboard" element={<AdminDashboard />} />
+          
+          {/* Default Catch */}
+          <Route path="*" element={<Navigate to="/" />} />
+        </Routes>
+      </BrowserRouter>
+    </AuthProvider>
   )
 }
 
