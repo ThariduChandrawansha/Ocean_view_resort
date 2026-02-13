@@ -11,6 +11,7 @@ import ResetPassword from './pages/ResetPassword'
 import UserManagement from './pages/UserManagement'
 import RoomCategories from './pages/RoomCategories'
 import RoomManagement from './pages/RoomManagement'
+import ReservationManagement from './pages/ReservationManagement'
 
 function Landing() {
   return (
@@ -48,6 +49,7 @@ function App() {
           {/* Protected Routes */}
           <Route path="/profile" element={<Profile />} />
           <Route path="/admin/dashboard" element={<AdminDashboard />} />
+          <Route path="/admin/reservations" element={<ReservationManagement />} />
           <Route path="/admin/users" element={<UserManagement />} />
           <Route path="/admin/room-categories" element={<RoomCategories />} />
           <Route path="/admin/rooms" element={<RoomManagement />} />

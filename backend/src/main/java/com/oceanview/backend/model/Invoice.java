@@ -14,7 +14,11 @@ public class Invoice {
     @Id
     private String id;
     
-    private String guestId;
-    private Double subtotal;
     private String reservationId;
+    private String guestId;
+    private String guestName;
+    private String roomName;
+    private Double totalPrice;
+    private java.time.LocalDateTime invoiceDate;
+    private PaymentStatus paymentStatus;
 }
