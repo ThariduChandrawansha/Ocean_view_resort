@@ -1,6 +1,9 @@
 com\oceanview\backend\dto\ForgotPasswordRequest.class
 com\oceanview\backend\dto\ResetPasswordRequest.class
 com\oceanview\backend\model\Invoice.class
+com\oceanview\backend\repository\RoomTypeRepository.class
+com\oceanview\backend\service\RoomTypeService.class
+com\oceanview\backend\controller\RoomTypeController.class
 com\oceanview\backend\controller\HealthController.class
 com\oceanview\backend\BackendApplication.class
 com\oceanview\backend\controller\AuthController.class

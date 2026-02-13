@@ -9,6 +9,7 @@ import AdminDashboard from './pages/AdminDashboard'
 import ForgotPassword from './pages/ForgotPassword'
 import ResetPassword from './pages/ResetPassword'
 import UserManagement from './pages/UserManagement'
+import RoomCategories from './pages/RoomCategories'
 
 function Landing() {
   return (
@@ -47,6 +48,7 @@ function App() {
           <Route path="/profile" element={<Profile />} />
           <Route path="/admin/dashboard" element={<AdminDashboard />} />
           <Route path="/admin/users" element={<UserManagement />} />
+          <Route path="/admin/room-categories" element={<RoomCategories />} />
           
           {/* Default Catch */}
           <Route path="*" element={<Navigate to="/" />} />

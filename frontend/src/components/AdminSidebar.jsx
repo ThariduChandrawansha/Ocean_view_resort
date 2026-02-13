@@ -11,6 +11,7 @@ const AdminSidebar = () => {
         { path: '/admin/dashboard', label: 'Dashboard', icon: LayoutDashboard },
         { path: '/admin/reservations', label: 'Reservations', icon: CalendarDays },
         { path: '/admin/rooms', label: 'Rooms', icon: BedDouble },
+        { path: '/admin/room-categories', label: 'Room Categories', icon: Palmtree },
         { path: '/admin/users', label: 'Users', icon: Users },
         { path: '/admin/invoices', label: 'Invoices', icon: FileText },
     ];
