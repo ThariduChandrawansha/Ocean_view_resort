@@ -7,6 +7,7 @@ com\oceanview\backend\controller\AuthController.class
 com\oceanview\backend\model\User.class
 com\oceanview\backend\model\RoomType.class
 com\oceanview\backend\dto\LoginRequest.class
+com\oceanview\backend\controller\UserController.class
 com\oceanview\backend\dto\RegisterRequest.class
 com\oceanview\backend\model\ReservationStatus.class
 com\oceanview\backend\repository\UserRepository.class

@@ -8,6 +8,7 @@ import Profile from './pages/Profile'
 import AdminDashboard from './pages/AdminDashboard'
 import ForgotPassword from './pages/ForgotPassword'
 import ResetPassword from './pages/ResetPassword'
+import UserManagement from './pages/UserManagement'
 
 function Landing() {
   return (
@@ -45,6 +46,7 @@ function App() {
           {/* Protected Routes */}
           <Route path="/profile" element={<Profile />} />
           <Route path="/admin/dashboard" element={<AdminDashboard />} />
+          <Route path="/admin/users" element={<UserManagement />} />
           
           {/* Default Catch */}
           <Route path="*" element={<Navigate to="/" />} />
