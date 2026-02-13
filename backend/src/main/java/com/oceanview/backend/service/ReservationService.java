@@ -84,6 +84,17 @@ public class ReservationService {
         return saved;
     }
 
+    public Reservation updatePaymentStatus(String id, PaymentStatus status) {
+        Reservation reservation = getReservationById(id);
+        reservation.setPaymentStatus(status);
+        Reservation saved = reservationRepository.save(reservation);
+        
+        // When paid, ensuring invoice exists
+        invoiceService.createInvoice(saved);
+        
+        return saved;
+    }
+
     private void sendEmailNotification(Reservation reservation, String subject, String messageContent) {
         User guest = userRepository.findById(reservation.getGuestId()).orElse(null);
         if (guest == null || guest.getEmail() == null) return;

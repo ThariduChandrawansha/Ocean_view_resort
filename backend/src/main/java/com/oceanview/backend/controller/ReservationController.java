@@ -1,5 +1,6 @@
 package com.oceanview.backend.controller;
 
+import com.oceanview.backend.model.PaymentStatus;
 import com.oceanview.backend.model.Reservation;
 import com.oceanview.backend.model.ReservationStatus;
 import com.oceanview.backend.service.ReservationService;
@@ -46,6 +47,17 @@ public class ReservationController {
             @RequestParam ReservationStatus status) {
         try {
             return ResponseEntity.ok(reservationService.updateReservationStatus(id, status));
+        } catch (RuntimeException e) {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
+    @PutMapping("/{id}/payment-status")
+    public ResponseEntity<Reservation> updatePaymentStatus(
+            @PathVariable String id,
+            @RequestParam PaymentStatus status) {
+        try {
+            return ResponseEntity.ok(reservationService.updatePaymentStatus(id, status));
         } catch (RuntimeException e) {
             return ResponseEntity.notFound().build();
         }

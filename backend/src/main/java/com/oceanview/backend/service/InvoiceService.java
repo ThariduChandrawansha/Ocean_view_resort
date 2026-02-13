@@ -38,7 +38,8 @@ public class InvoiceService {
         User guest = userRepository.findById(reservation.getGuestId()).orElse(null);
         Room room = roomRepository.findById(reservation.getRoomId()).orElse(null);
 
-        Invoice invoice = new Invoice();
+        Invoice invoice = invoiceRepository.findByReservationId(reservation.getId()).orElse(new Invoice());
+        
         invoice.setReservationId(reservation.getId());
         invoice.setGuestId(reservation.getGuestId());
         invoice.setGuestName(guest != null ? guest.getName() : "Unknown Guest");
