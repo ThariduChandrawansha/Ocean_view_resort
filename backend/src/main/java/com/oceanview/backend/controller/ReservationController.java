@@ -22,6 +22,19 @@ public class ReservationController {
         return reservationService.getAllReservations();
     }
 
+    @GetMapping("/check-availability")
+    public ResponseEntity<Boolean> checkAvailability(
+            @RequestParam String roomId,
+            @RequestParam java.time.LocalDate checkIn,
+            @RequestParam java.time.LocalDate checkOut) {
+        return ResponseEntity.ok(reservationService.isRoomAvailable(roomId, checkIn, checkOut));
+    }
+
+    @PostMapping
+    public ResponseEntity<Reservation> createReservation(@RequestBody Reservation reservation) {
+        return ResponseEntity.ok(reservationService.createReservation(reservation));
+    }
+
     @GetMapping("/{id}")
     public ResponseEntity<Reservation> getReservationById(@PathVariable String id) {
         return ResponseEntity.ok(reservationService.getReservationById(id));

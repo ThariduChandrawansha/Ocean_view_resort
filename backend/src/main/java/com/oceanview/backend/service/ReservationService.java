@@ -35,6 +35,34 @@ public class ReservationService {
         return reservationRepository.findAll();
     }
 
+    public List<Reservation> getReservationsByRoomId(String roomId) {
+        return reservationRepository.findByRoomId(roomId);
+    }
+
+    public boolean isRoomAvailable(String roomId, java.time.LocalDate checkIn, java.time.LocalDate checkOut) {
+        List<Reservation> activeReservations = reservationRepository.findByRoomId(roomId).stream()
+                .filter(r -> r.getStatus() != ReservationStatus.REJECTED)
+                .toList();
+
+        for (Reservation res : activeReservations) {
+            // Check for overlap
+            if (!(checkOut.isBefore(res.getCheckIn()) || checkIn.isAfter(res.getCheckOut()))) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    public Reservation createReservation(Reservation reservation) {
+        if (!isRoomAvailable(reservation.getRoomId(), reservation.getCheckIn(), reservation.getCheckOut())) {
+            throw new RuntimeException("Room is not available for requested dates");
+        }
+        
+        reservation.setStatus(ReservationStatus.PENDING);
+        reservation.setPaymentStatus(PaymentStatus.UNPAID);
+        return reservationRepository.save(reservation);
+    }
+
     public Reservation getReservationById(String id) {
         return reservationRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Reservation not found"));

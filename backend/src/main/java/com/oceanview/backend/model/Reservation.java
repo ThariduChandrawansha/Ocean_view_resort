@@ -27,4 +27,8 @@ public class Reservation {
     private ReservationStatus status;
     private String notes;
     private PaymentStatus paymentStatus;
+
+    // Contact details for guest specifically for this reservation
+    private String guestAddress;
+    private String guestPhone;
 }

@@ -16,6 +16,7 @@ import About from './pages/About'
 import Contact from './pages/Contact'
 import Rooms from './pages/Rooms'
 import Help from './pages/Help'
+import RoomDetails from './pages/RoomDetails'
 
 function Landing() {
   return (
@@ -50,6 +51,7 @@ function App() {
           <Route path="/about" element={<About />} />
           <Route path="/contact" element={<Contact />} />
           <Route path="/rooms" element={<Rooms />} />
+          <Route path="/room/:id" element={<RoomDetails />} />
           <Route path="/help" element={<Help />} />
           <Route path="/forgot-password" element={<ForgotPassword />} />
           <Route path="/reset-password" element={<ResetPassword />} />

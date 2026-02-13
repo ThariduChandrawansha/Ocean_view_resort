@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 import { BedDouble, Users, Palmtree, ArrowRight, Star, Wind, Wifi, Coffee, Loader2, Search } from 'lucide-react';
+import { Link } from 'react-router-dom';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 
@@ -153,10 +154,10 @@ const Rooms = () => {
                                             <span className="text-xs font-bold text-slate-400 uppercase tracking-widest">Pricing</span>
                                             <span className="text-lg font-black text-slate-900">LKR {room.rate?.toLocaleString()}<span className="text-sm text-slate-400 font-medium">/night</span></span>
                                         </div>
-                                        <a href="/register" className="group/btn flex items-center gap-2 bg-slate-900 text-white px-6 py-3 rounded-2xl font-black text-sm hover:bg-cyan-600 transition-all shadow-lg shadow-slate-200">
-                                            Book Stay
+                                        <Link to={`/room/${room.id}`} className="group/btn flex items-center gap-2 bg-slate-900 text-white px-6 py-3 rounded-2xl font-black text-sm hover:bg-cyan-600 transition-all shadow-lg shadow-slate-200">
+                                            View Room
                                             <ArrowRight className="w-4 h-4 group-hover/btn:translate-x-1 transition-transform" />
-                                        </a>
+                                        </Link>
                                     </div>
                                 </div>
                             </div>
