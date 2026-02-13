@@ -12,6 +12,10 @@ import UserManagement from './pages/UserManagement'
 import RoomCategories from './pages/RoomCategories'
 import RoomManagement from './pages/RoomManagement'
 import ReservationManagement from './pages/ReservationManagement'
+import About from './pages/About'
+import Contact from './pages/Contact'
+import Rooms from './pages/Rooms'
+import Help from './pages/Help'
 
 function Landing() {
   return (
@@ -43,6 +47,10 @@ function App() {
           <Route path="/" element={<Landing />} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
+          <Route path="/about" element={<About />} />
+          <Route path="/contact" element={<Contact />} />
+          <Route path="/rooms" element={<Rooms />} />
+          <Route path="/help" element={<Help />} />
           <Route path="/forgot-password" element={<ForgotPassword />} />
           <Route path="/reset-password" element={<ResetPassword />} />
           

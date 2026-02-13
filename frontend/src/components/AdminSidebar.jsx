@@ -13,7 +13,6 @@ const AdminSidebar = () => {
         { path: '/admin/rooms', label: 'Rooms', icon: BedDouble },
         { path: '/admin/room-categories', label: 'Room Categories', icon: Palmtree },
         { path: '/admin/users', label: 'Users', icon: Users },
-        { path: '/admin/invoices', label: 'Invoices', icon: FileText },
     ];
 
     const handleLogout = () => {

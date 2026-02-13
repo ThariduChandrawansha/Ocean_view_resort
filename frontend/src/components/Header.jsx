@@ -35,10 +35,20 @@ const Header = () => {
 
         {/* Desktop Navigation */}
         <nav className="hidden md:flex items-center gap-8">
-          {['Home', 'Rooms', 'Activities', 'About', 'Contact'].map((item) => (
-            <a key={item} href={`#${item.toLowerCase()}`} className="text-slate-600 hover:text-cyan-600 font-medium transition-colors">
-              {item}
-            </a>
+          {[
+            { name: 'Home', path: '/' },
+            { name: 'Rooms', path: '/rooms' },
+            { name: 'About', path: '/about' },
+            { name: 'Contact', path: '/contact' },
+            { name: 'Help', path: '/help' }
+          ].map((item) => (
+            <Link 
+              key={item.name} 
+              to={item.path} 
+              className="text-slate-600 hover:text-cyan-600 font-medium transition-colors"
+            >
+              {item.name}
+            </Link>
           ))}
         </nav>
 
@@ -84,10 +94,21 @@ const Header = () => {
       {/* Mobile Menu */}
       {isOpen && (
         <div className="md:hidden absolute top-full left-0 w-full bg-white/95 backdrop-blur-md border-b border-slate-100 shadow-xl py-4 flex flex-col items-center gap-4 animate-in slide-in-from-top-2">
-          {['Home', 'Rooms', 'Activities', 'About', 'Contact'].map((item) => (
-            <a key={item} href="#" className="text-lg font-medium text-slate-600 hover:text-cyan-600" onClick={() => setIsOpen(false)}>
-              {item}
-            </a>
+          {[
+            { name: 'Home', path: '/' },
+            { name: 'Rooms', path: '/rooms' },
+            { name: 'About', path: '/about' },
+            { name: 'Contact', path: '/contact' },
+            { name: 'Help', path: '/help' }
+          ].map((item) => (
+            <Link 
+              key={item.name} 
+              to={item.path} 
+              className="text-lg font-medium text-slate-600 hover:text-cyan-600" 
+              onClick={() => setIsOpen(false)}
+            >
+              {item.name}
+            </Link>
           ))}
           <div className="w-full h-px bg-slate-100 my-2"></div>
           {user ? (
