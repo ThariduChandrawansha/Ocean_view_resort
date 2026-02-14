@@ -1,0 +1,30 @@
+[{
+  "_id": {
+    "$oid": "698ed9a617586a0047823102"
+  },
+  "email": "savindu147@gmail.com",
+  "password": "11111111",
+  "name": "Savindu",
+  "role": "ADMIN",
+  "_class": "com.oceanview.backend.model.User"
+},
+{
+  "_id": {
+    "$oid": "699066af98ec7144b9ce7a5c"
+  },
+  "email": "staff@gmail.com",
+  "password": "11111111",
+  "name": "Staff",
+  "role": "STAFF",
+  "_class": "com.oceanview.backend.model.User"
+},
+{
+  "_id": {
+    "$oid": "699066c098ec7144b9ce7a5d"
+  },
+  "email": "guest@gmail.com",
+  "password": "11111111",
+  "name": "Tharindu",
+  "role": "GUEST",
+  "_class": "com.oceanview.backend.model.User"
+}]

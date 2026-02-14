@@ -1,0 +1,42 @@
+[{
+  "_id": {
+    "$oid": "69906e3e66ed1f3c349fc621"
+  },
+  "guestId": "699066c098ec7144b9ce7a5d",
+  "roomId": "699069f798ec7144b9ce7a68",
+  "checkIn": {
+    "$date": "2026-02-14T18:30:00.000Z"
+  },
+  "checkOut": {
+    "$date": "2026-02-17T18:30:00.000Z"
+  },
+  "totalCost": 58500,
+  "totalNights": 3,
+  "status": "APPROVED",
+  "notes": "Have Pet",
+  "paymentStatus": "PAID",
+  "guestAddress": "20/A, Tuduwamulla, Ambalangoda",
+  "guestPhone": "0772892789",
+  "_class": "com.oceanview.backend.model.Reservation"
+},
+{
+  "_id": {
+    "$oid": "69908c9c28ea4b4571bfc0ee"
+  },
+  "guestId": "699066c098ec7144b9ce7a5d",
+  "roomId": "699067e998ec7144b9ce7a63",
+  "checkIn": {
+    "$date": "2026-02-13T18:30:00.000Z"
+  },
+  "checkOut": {
+    "$date": "2026-02-15T18:30:00.000Z"
+  },
+  "totalCost": 16000,
+  "totalNights": 2,
+  "status": "PENDING",
+  "notes": "",
+  "paymentStatus": "UNPAID",
+  "guestAddress": "dffsdff",
+  "guestPhone": "34324",
+  "_class": "com.oceanview.backend.model.Reservation"
+}]

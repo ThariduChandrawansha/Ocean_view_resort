@@ -1,0 +1,15 @@
+[{
+  "_id": {
+    "$oid": "69906e5266ed1f3c349fc622"
+  },
+  "reservationId": "69906e3e66ed1f3c349fc621",
+  "guestId": "699066c098ec7144b9ce7a5d",
+  "guestName": "Tharindu",
+  "roomName": "302 – Coral Bay",
+  "totalPrice": 58500,
+  "invoiceDate": {
+    "$date": "2026-02-14T12:46:31.712Z"
+  },
+  "paymentStatus": "PAID",
+  "_class": "com.oceanview.backend.model.Invoice"
+}]

@@ -1,0 +1,35 @@
+[{
+  "_id": {
+    "$oid": "699066f798ec7144b9ce7a5e"
+  },
+  "name": "Standard Garden View Room",
+  "_class": "com.oceanview.backend.model.RoomType"
+},
+{
+  "_id": {
+    "$oid": "699066fc98ec7144b9ce7a5f"
+  },
+  "name": "Deluxe Ocean View Room",
+  "_class": "com.oceanview.backend.model.RoomType"
+},
+{
+  "_id": {
+    "$oid": "6990670198ec7144b9ce7a60"
+  },
+  "name": "Premium Beachfront Room",
+  "_class": "com.oceanview.backend.model.RoomType"
+},
+{
+  "_id": {
+    "$oid": "6990670898ec7144b9ce7a61"
+  },
+  "name": "Junior Suite Ocean View",
+  "_class": "com.oceanview.backend.model.RoomType"
+},
+{
+  "_id": {
+    "$oid": "6990670e98ec7144b9ce7a62"
+  },
+  "name": "Family Ocean Suite",
+  "_class": "com.oceanview.backend.model.RoomType"
+}]
