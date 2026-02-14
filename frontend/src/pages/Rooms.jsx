@@ -125,25 +125,7 @@ const Rooms = () => {
                                         </div>
                                     </div>
 
-                                    {/* Amenities Icons */}
-                                    <div className="flex items-center gap-6 mb-8 py-4 border-y border-slate-50">
-                                        <div className="flex flex-col items-center gap-1.5 grayscale group-hover:grayscale-0 transition-all">
-                                            <Users className="w-5 h-5 text-slate-400 group-hover:text-cyan-600" />
-                                            <span className="text-[10px] font-bold text-slate-400 uppercase tracking-tighter">{room.capacity} Guests</span>
-                                        </div>
-                                        <div className="flex flex-col items-center gap-1.5 grayscale group-hover:grayscale-0 transition-all">
-                                            <Wifi className="w-5 h-5 text-slate-400 group-hover:text-cyan-600" />
-                                            <span className="text-[10px] font-bold text-slate-400 uppercase tracking-tighter">Free WiFi</span>
-                                        </div>
-                                        <div className="flex flex-col items-center gap-1.5 grayscale group-hover:grayscale-0 transition-all">
-                                            <Coffee className="w-5 h-5 text-slate-400 group-hover:text-cyan-600" />
-                                            <span className="text-[10px] font-bold text-slate-400 uppercase tracking-tighter">Breakfast</span>
-                                        </div>
-                                        <div className="flex flex-col items-center gap-1.5 grayscale group-hover:grayscale-0 transition-all ml-auto">
-                                            <Wind className="w-5 h-5 text-slate-400 group-hover:text-emerald-500" />
-                                            <span className="text-[10px] font-bold text-slate-400 uppercase tracking-tighter">AC Room</span>
-                                        </div>
-                                    </div>
+                               
 
                                     <p className="text-slate-500 text-sm leading-relaxed mb-8 line-clamp-3 italic">
                                         {room.description || "Indulge in the ultimate coastal luxury. This room offers premium comfort, modern elegant decor, and a serene atmosphere for a perfect island getaway."}

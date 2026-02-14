@@ -235,27 +235,7 @@ const RoomDetails = () => {
                                         {room.capacity} Persons
                                     </div>
                                 </div>
-                                <div className="space-y-2">
-                                    <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Internet</p>
-                                    <div className="flex items-center gap-2 text-slate-800 font-bold">
-                                        <Wifi className="w-5 h-5 text-cyan-500" />
-                                        Ultra-Fast
-                                    </div>
-                                </div>
-                                <div className="space-y-2">
-                                    <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Beverages</p>
-                                    <div className="flex items-center gap-2 text-slate-800 font-bold">
-                                        <Coffee className="w-5 h-5 text-cyan-500" />
-                                        Complimentary
-                                    </div>
-                                </div>
-                                <div className="space-y-2">
-                                    <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Climate</p>
-                                    <div className="flex items-center gap-2 text-slate-800 font-bold">
-                                        <Wind className="w-5 h-5 text-cyan-500" />
-                                        Individual AC
-                                    </div>
-                                </div>
+                               
                             </div>
 
                             <div className="space-y-6">
