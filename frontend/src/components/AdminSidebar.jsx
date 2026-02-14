@@ -1,5 +1,5 @@
 import { Link, useLocation, useNavigate } from 'react-router-dom';
-import { LayoutDashboard, CalendarDays, BedDouble, Users, FileText, Palmtree, LogOut } from 'lucide-react';
+import { LayoutDashboard, CalendarDays, BedDouble, Users, FileText, Palmtree, LogOut, HelpCircle } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
 
 const AdminSidebar = () => {
@@ -13,6 +13,7 @@ const AdminSidebar = () => {
         { path: '/admin/rooms', label: 'Rooms', icon: BedDouble },
         { path: '/admin/room-categories', label: 'Room Categories', icon: Palmtree },
         { path: '/admin/users', label: 'Users', icon: Users },
+        { path: '/admin/help', label: 'Help', icon: HelpCircle },
     ];
 
     const handleLogout = () => {

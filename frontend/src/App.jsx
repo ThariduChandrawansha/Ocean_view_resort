@@ -17,6 +17,7 @@ import About from './pages/About'
 import Contact from './pages/Contact'
 import Rooms from './pages/Rooms'
 import Help from './pages/Help'
+import AdminHelp from './pages/AdminHelp'
 import RoomDetails from './pages/RoomDetails'
 
 
@@ -44,6 +45,7 @@ function App() {
           <Route path="/admin/users" element={<UserManagement />} />
           <Route path="/admin/room-categories" element={<RoomCategories />} />
           <Route path="/admin/rooms" element={<RoomManagement />} />
+          <Route path="/admin/help" element={<AdminHelp />} />
           
           {/* Default Catch */}
           <Route path="*" element={<Navigate to="/" />} />
