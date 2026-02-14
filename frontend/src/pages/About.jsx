@@ -132,7 +132,7 @@ const About = () => {
           <div className="bg-gradient-to-r from-cyan-600 to-blue-600 rounded-[3rem] p-12 md:p-20 text-center text-white shadow-2xl shadow-cyan-200">
             <h2 className="text-4xl md:text-5xl font-black mb-8">Ready to Experience Paradise?</h2>
             <div className="flex flex-col md:flex-row gap-4 justify-center">
-              <a href="/login" className="bg-white text-cyan-600 px-10 py-4 rounded-2xl font-black flex items-center justify-center gap-2 hover:bg-slate-50 transition-all shadow-lg">
+              <a href="/rooms" className="bg-white text-cyan-600 px-10 py-4 rounded-2xl font-black flex items-center justify-center gap-2 hover:bg-slate-50 transition-all shadow-lg">
                 View All Rooms <ArrowRight className="w-5 h-5" />
               </a>
               <a href="/contact" className="bg-slate-900 text-white px-10 py-4 rounded-2xl font-black hover:bg-slate-800 transition-all shadow-lg border border-slate-800">
