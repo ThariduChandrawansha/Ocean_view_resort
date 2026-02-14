@@ -14,7 +14,8 @@ import {
     Clock, 
     CreditCard,
     AlertCircle,
-    Loader2
+    Loader2,
+    Trash2
 } from 'lucide-react';
 import AdminSidebar from '../components/AdminSidebar';
 
@@ -86,6 +87,20 @@ const ReservationManagement = () => {
         }
     };
 
+    const handleDeleteReservation = async (id) => {
+        if (window.confirm('Are you sure you want to delete this reservation?')) {
+            try {
+                await axios.delete(`http://localhost:8080/api/reservations/${id}`);
+                setSuccess('Reservation deleted successfully.');
+                fetchData();
+                setTimeout(() => setSuccess(''), 3000);
+            } catch (err) {
+                setError('Failed to delete reservation.');
+                setTimeout(() => setError(''), 3000);
+            }
+        }
+    };
+
     const handlePrint = () => {
         window.print();
     };
@@ -108,7 +123,7 @@ const ReservationManagement = () => {
 
     return (
         <div className="flex bg-slate-50 min-h-screen font-sans">
-            <div className="flex-1 mr-64 print:mr-0">
+            <div className={`flex-1 mr-64 print:mr-0 ${isInvoiceModalOpen ? 'print:hidden' : ''}`}>
                 <header className="bg-white/80 backdrop-blur-md sticky top-0 z-40 border-b border-slate-200 px-8 py-5 flex justify-between items-center shadow-sm print:hidden">
                     <div className="flex items-center gap-3">
                         <div className="p-2 bg-blue-100 text-blue-600 rounded-lg">
@@ -245,6 +260,13 @@ const ReservationManagement = () => {
                                                                     <FileText className="w-5 h-5" />
                                                                 </button>
                                                             )}
+                                                            <button 
+                                                                onClick={() => handleDeleteReservation(res.id)}
+                                                                className="p-2 text-slate-400 hover:text-rose-600 hover:bg-rose-50 rounded-lg transition-all"
+                                                                title="Delete Reservation"
+                                                            >
+                                                                <Trash2 className="w-5 h-5" />
+                                                            </button>
                                                         </div>
                                                     </td>
                                                 </tr>
@@ -264,7 +286,7 @@ const ReservationManagement = () => {
             {isViewModalOpen && viewingReservation && (
                 <div className="fixed inset-0 z-[60] flex items-center justify-center p-4 print:hidden">
                     <div className="absolute inset-0 bg-slate-900/60 backdrop-blur-sm" onClick={() => setIsViewModalOpen(false)}></div>
-                    <div className="bg-white rounded-[2rem] w-full max-w-2xl shadow-2xl relative animate-in fade-in zoom-in-95 duration-300 overflow-hidden">
+                    <div className="bg-white rounded-[2rem] w-full max-w-2xl shadow-2xl relative animate-in fade-in zoom-in-95 duration-300 flex flex-col max-h-[90vh]">
                         <div className="p-8 border-b border-slate-100 flex justify-between items-center bg-slate-50/50">
                             <div className="flex items-center gap-3">
                                 <div className="p-2.5 bg-blue-100 text-blue-600 rounded-2xl shadow-sm">
@@ -280,7 +302,7 @@ const ReservationManagement = () => {
                             </button>
                         </div>
 
-                        <div className="p-8 space-y-8">
+                        <div className="p-8 space-y-8 overflow-y-auto flex-1">
                             <div className="grid grid-cols-2 gap-8">
                                 <div className="space-y-4">
                                     <h3 className="text-[11px] font-bold text-slate-400 uppercase tracking-[0.2em] flex items-center gap-2">
@@ -381,9 +403,9 @@ const ReservationManagement = () => {
 
             {/* Invoice Modal */}
             {isInvoiceModalOpen && viewingInvoice && (
-                <div className="fixed inset-0 z-[100] flex items-center justify-center p-4">
+                <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 print:relative print:p-0 print:block print:z-0">
                     <div className="absolute inset-0 bg-slate-900/60 backdrop-blur-md print:hidden" onClick={() => setIsInvoiceModalOpen(false)}></div>
-                    <div className="bg-white rounded-[2.5rem] w-full max-w-4xl shadow-2xl relative animate-in fade-in slide-in-from-bottom-8 duration-500 overflow-hidden flex flex-col p-8 print:p-0 print:shadow-none print:rounded-none">
+                    <div className="bg-white rounded-[2.5rem] w-full max-w-4xl shadow-2xl relative animate-in fade-in slide-in-from-bottom-8 duration-500 overflow-y-auto max-h-[95vh] flex flex-col p-8 print:p-0 print:shadow-none print:rounded-none print:max-h-none print:overflow-visible print:w-full">
                         <div className="flex justify-between items-start mb-12 border-b border-slate-100 pb-8 print:border-slate-800">
                             <div>
                                 <h2 className="text-4xl font-black text-slate-900 mb-2">INVOICE</h2>
