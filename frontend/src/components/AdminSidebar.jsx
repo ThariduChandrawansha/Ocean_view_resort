@@ -24,7 +24,7 @@ const AdminSidebar = () => {
         <div className="w-64 bg-white h-screen fixed right-0 top-0 border-l border-slate-200 shadow-xl flex flex-col z-50 print:hidden">
             <div className="p-6 border-b border-slate-100 flex items-center justify-end gap-2">
                 <span className="text-xl font-bold bg-gradient-to-r from-cyan-600 to-blue-600 bg-clip-text text-transparent">
-                    Ocean Manager
+                    Ocean View Resort Admininstrator
                 </span>
                 <Palmtree className="text-cyan-600 w-6 h-6" />
             </div>
