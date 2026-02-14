@@ -1,13 +1,20 @@
 import { Link, useLocation, useNavigate } from 'react-router-dom';
-import { LayoutDashboard, CalendarDays, BedDouble, Users, FileText, Palmtree, LogOut, HelpCircle } from 'lucide-react';
+import { LayoutDashboard, CalendarDays, BedDouble, Users, FileText, Palmtree, LogOut, HelpCircle, Eraser } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
 
 const AdminSidebar = () => {
     const location = useLocation();
     const navigate = useNavigate();
-    const { logout } = useAuth();
+    const { logout, user } = useAuth();
 
-    const menuItems = [
+    const menuItems = user?.role === 'STAFF' 
+    ? [
+        { path: '/staff/dashboard', label: 'Dashboard', icon: LayoutDashboard },
+        { path: '/staff/guests', label: 'Guests', icon: Users },
+        { path: '/staff/room-cleaning', label: 'Room Cleaning', icon: Eraser },
+        { path: '/staff/help', label: 'Help', icon: HelpCircle },
+    ]
+    : [
         { path: '/admin/dashboard', label: 'Dashboard', icon: LayoutDashboard },
         { path: '/admin/reservations', label: 'Reservations', icon: CalendarDays },
         { path: '/admin/rooms', label: 'Rooms', icon: BedDouble },
@@ -25,7 +32,7 @@ const AdminSidebar = () => {
         <div className="w-64 bg-white h-screen fixed right-0 top-0 border-l border-slate-200 shadow-xl flex flex-col z-50 print:hidden">
             <div className="p-6 border-b border-slate-100 flex items-center justify-end gap-2">
                 <span className="text-xl font-bold bg-gradient-to-r from-cyan-600 to-blue-600 bg-clip-text text-transparent">
-                    Ocean View Resort Admininstrator
+                    {user?.role === 'STAFF' ? 'Staff Portal' : 'Admin Portal'}
                 </span>
                 <Palmtree className="text-cyan-600 w-6 h-6" />
             </div>

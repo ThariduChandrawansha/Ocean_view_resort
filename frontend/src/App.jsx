@@ -18,6 +18,9 @@ import Contact from './pages/Contact'
 import Rooms from './pages/Rooms'
 import Help from './pages/Help'
 import AdminHelp from './pages/AdminHelp'
+import StaffHelp from './pages/StaffHelp'
+import StaffDashboard from './pages/StaffDashboard'
+import RoomCleaning from './pages/RoomCleaning'
 import RoomDetails from './pages/RoomDetails'
 
 
@@ -46,6 +49,12 @@ function App() {
           <Route path="/admin/room-categories" element={<RoomCategories />} />
           <Route path="/admin/rooms" element={<RoomManagement />} />
           <Route path="/admin/help" element={<AdminHelp />} />
+          
+          {/* Staff Routes */}
+          <Route path="/staff/help" element={<StaffHelp />} />
+          <Route path="/staff/dashboard" element={<StaffDashboard />} />
+          <Route path="/staff/room-cleaning" element={<RoomCleaning />} />
+          <Route path="/staff/guests" element={<UserManagement />} />
           
           {/* Default Catch */}
           <Route path="*" element={<Navigate to="/" />} />

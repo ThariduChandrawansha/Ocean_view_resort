@@ -23,7 +23,10 @@ const Login = () => {
       const response = await axios.post('http://localhost:8080/api/auth/login', { email, password });
       login(response.data);
       
-      const targetPath = ['ADMIN', 'STAFF'].includes(response.data.role) ? '/admin/dashboard' : '/profile';
+      let targetPath = '/profile';
+      if (response.data.role === 'ADMIN') targetPath = '/admin/dashboard';
+      else if (response.data.role === 'STAFF') targetPath = '/staff/dashboard';
+      
       navigate(targetPath);
     } catch (err) {
       setError(err.response?.data?.error || 'Invalid credentials. Please try again.');

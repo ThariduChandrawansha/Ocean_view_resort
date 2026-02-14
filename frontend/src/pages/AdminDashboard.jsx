@@ -12,7 +12,8 @@ import {
     DollarSign, 
     BedDouble, 
     UserCheck,
-    Loader2
+    Loader2,
+    Eraser
 } from 'lucide-react';
 import { 
     LineChart, 
@@ -36,8 +37,9 @@ const AdminDashboard = () => {
 
     // Protect Route
     useEffect(() => {
-        if (!authLoading && (!user || (user.role !== 'ADMIN' && user.role !== 'STAFF'))) {
-            navigate('/login');
+        if (!authLoading) {
+            if (!user) navigate('/login');
+            else if (user.role === 'STAFF') navigate('/staff/dashboard');
         }
     }, [user, authLoading, navigate]);
 
@@ -195,85 +197,105 @@ const AdminDashboard = () => {
                                 </div>
                             </div>
 
-                            <div className="grid lg:grid-cols-3 gap-8">
-                                {/* Recent Reservations */}
-                                <div className="lg:col-span-2 bg-white rounded-[2.5rem] border border-slate-100 shadow-sm p-8">
-                                    <div className="flex justify-between items-center mb-8">
-                                        <h3 className="text-2xl font-black text-slate-800">Recent Arrivals</h3>
-                                        <button 
-                                            onClick={() => navigate('/admin/reservations')}
-                                            className="text-sm font-bold text-cyan-600 hover:text-cyan-700 bg-cyan-50 px-4 py-2 rounded-xl transition-all"
-                                        >
-                                            View Schedule
-                                        </button>
+                            {user?.role === 'ADMIN' ? (
+                                <div className="grid lg:grid-cols-3 gap-8">
+                                    {/* Recent Reservations */}
+                                    <div className="lg:col-span-2 bg-white rounded-[2.5rem] border border-slate-100 shadow-sm p-8">
+                                        <div className="flex justify-between items-center mb-8">
+                                            <h3 className="text-2xl font-black text-slate-800">Recent Arrivals</h3>
+                                            <button 
+                                                onClick={() => navigate('/admin/reservations')}
+                                                className="text-sm font-bold text-cyan-600 hover:text-cyan-700 bg-cyan-50 px-4 py-2 rounded-xl transition-all"
+                                            >
+                                                View Schedule
+                                            </button>
+                                        </div>
+                                        <div className="space-y-4">
+                                            {recentReservations.length > 0 ? (
+                                                recentReservations.map((res) => {
+                                                    const guestUser = allUsers.find(u => u.id === res.guestId);
+                                                    return (
+                                                        <div key={res.id} className="flex items-center justify-between p-5 hover:bg-slate-50 rounded-3xl transition-all border border-transparent hover:border-slate-100 group">
+                                                            <div className="flex items-center gap-5">
+                                                                <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-slate-100 to-slate-200 flex items-center justify-center font-black text-slate-600 shadow-sm group-hover:scale-110 transition-transform">
+                                                                    {guestUser?.name.charAt(0)}
+                                                                </div>
+                                                                <div>
+                                                                    <p className="font-black text-slate-800 text-lg">{guestUser?.name || 'Unknown Guest'}</p>
+                                                                    <p className="text-xs text-slate-400 font-bold uppercase tracking-widest mt-0.5">
+                                                                        Stay: {new Date(res.checkIn).toLocaleDateString()} - {new Date(res.checkOut).toLocaleDateString()}
+                                                                    </p>
+                                                                </div>
+                                                            </div>
+                                                            <div className="text-right">
+                                                                <span className={`px-4 py-1.5 rounded-full text-[10px] font-black uppercase tracking-[0.1em] border ${
+                                                                    res.status === 'APPROVED' ? 'bg-emerald-50 text-emerald-600 border-emerald-100' : 
+                                                                    res.status === 'PENDING' ? 'bg-amber-50 text-amber-600 border-amber-100' : 'bg-rose-50 text-rose-600 border-rose-100'
+                                                                }`}>
+                                                                    {res.status}
+                                                                </span>
+                                                                <p className="text-sm font-bold text-slate-800 mt-2">LKR {res.totalCost?.toLocaleString()}</p>
+                                                            </div>
+                                                        </div>
+                                                    )
+                                                })
+                                            ) : (
+                                                <div className="text-center py-12 bg-slate-50 rounded-3xl border border-dashed border-slate-200">
+                                                    <CalendarDays className="w-12 h-12 text-slate-200 mx-auto mb-3" />
+                                                    <p className="text-slate-400 font-bold italic">No recent reservations recorded</p>
+                                                </div>
+                                            )}
+                                        </div>
                                     </div>
-                                    <div className="space-y-4">
-                                        {recentReservations.length > 0 ? (
-                                            recentReservations.map((res) => {
-                                                const guestUser = allUsers.find(u => u.id === res.guestId);
-                                                return (
-                                                    <div key={res.id} className="flex items-center justify-between p-5 hover:bg-slate-50 rounded-3xl transition-all border border-transparent hover:border-slate-100 group">
-                                                        <div className="flex items-center gap-5">
-                                                            <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-slate-100 to-slate-200 flex items-center justify-center font-black text-slate-600 shadow-sm group-hover:scale-110 transition-transform">
-                                                                {guestUser?.name.charAt(0)}
-                                                            </div>
-                                                            <div>
-                                                                <p className="font-black text-slate-800 text-lg">{guestUser?.name || 'Unknown Guest'}</p>
-                                                                <p className="text-xs text-slate-400 font-bold uppercase tracking-widest mt-0.5">
-                                                                    Stay: {new Date(res.checkIn).toLocaleDateString()} - {new Date(res.checkOut).toLocaleDateString()}
-                                                                </p>
-                                                            </div>
-                                                        </div>
-                                                        <div className="text-right">
-                                                            <span className={`px-4 py-1.5 rounded-full text-[10px] font-black uppercase tracking-[0.1em] border ${
-                                                                res.status === 'APPROVED' ? 'bg-emerald-50 text-emerald-600 border-emerald-100' : 
-                                                                res.status === 'PENDING' ? 'bg-amber-50 text-amber-600 border-amber-100' : 'bg-rose-50 text-rose-600 border-rose-100'
-                                                            }`}>
-                                                                {res.status}
-                                                            </span>
-                                                            <p className="text-sm font-bold text-slate-800 mt-2">LKR {res.totalCost?.toLocaleString()}</p>
-                                                        </div>
-                                                    </div>
-                                                )
-                                            })
-                                        ) : (
-                                            <div className="text-center py-12 bg-slate-50 rounded-3xl border border-dashed border-slate-200">
-                                                <CalendarDays className="w-12 h-12 text-slate-200 mx-auto mb-3" />
-                                                <p className="text-slate-400 font-bold italic">No recent reservations recorded</p>
-                                            </div>
-                                        )}
+
+                                    {/* Quick Actions */}
+                                    <div className="bg-white rounded-[2.5rem] border border-slate-100 shadow-sm p-8">
+                                        <h3 className="text-2xl font-black text-slate-800 mb-8">Operations</h3>
+                                        <div className="space-y-4">
+                                            {[
+                                                { label: 'Manage Reservations', path: '/admin/reservations', color: 'bg-blue-600 shadow-blue-100', icon: CalendarDays },
+                                                { label: 'Inventory Control', path: '/admin/rooms', color: 'bg-slate-900 shadow-slate-200', icon: BedDouble },
+                                                { label: 'Users Directory', path: '/admin/users', color: 'bg-purple-600 shadow-purple-100', icon: Users },
+                                                { label: 'Room Categories', path: '/admin/room-categories', color: 'bg-emerald-600 shadow-emerald-100', icon: TrendingUp },
+                                            ].map((action, i) => (
+                                                <button 
+                                                    key={i}
+                                                    onClick={() => navigate(action.path)}
+                                                    className={`w-full py-4 px-6 rounded-2xl text-white font-black text-sm transition-all shadow-xl hover:shadow-2xl hover:-translate-y-1 flex items-center justify-between ${action.color}`}
+                                                >
+                                                    {action.label}
+                                                    <action.icon className="w-5 h-5 opacity-50" />
+                                                </button>
+                                            ))}
+                                        </div>
+                                        <div className="mt-8 p-6 bg-slate-900 rounded-3xl text-white relative overflow-hidden group">
+                                            <div className="absolute inset-0 bg-gradient-to-br from-cyan-500/20 to-transparent"></div>
+                                            <p className="text-[10px] font-black text-cyan-400 uppercase tracking-widest mb-2 relative z-10">Quick Tip</p>
+                                            <p className="text-xs font-medium text-slate-300 relative z-10 group-hover:text-white transition-colors">
+                                                Total revenue is calculated automatically based on approved reservation invoices.
+                                            </p>
+                                        </div>
                                     </div>
                                 </div>
-
-                                {/* Quick Actions */}
-                                <div className="bg-white rounded-[2.5rem] border border-slate-100 shadow-sm p-8">
-                                    <h3 className="text-2xl font-black text-slate-800 mb-8">Operations</h3>
-                                    <div className="space-y-4">
-                                        {[
-                                            { label: 'Manage Reservations', path: '/admin/reservations', color: 'bg-blue-600 shadow-blue-100', icon: CalendarDays },
-                                            { label: 'Inventory Control', path: '/admin/rooms', color: 'bg-slate-900 shadow-slate-200', icon: BedDouble },
-                                            { label: 'Guest Directory', path: '/admin/users', color: 'bg-purple-600 shadow-purple-100', icon: Users },
-                                            { label: 'Room Categories', path: '/admin/room-categories', color: 'bg-emerald-600 shadow-emerald-100', icon: TrendingUp },
-                                        ].map((action, i) => (
-                                            <button 
-                                                key={i}
-                                                onClick={() => navigate(action.path)}
-                                                className={`w-full py-4 px-6 rounded-2xl text-white font-black text-sm transition-all shadow-xl hover:shadow-2xl hover:-translate-y-1 flex items-center justify-between ${action.color}`}
-                                            >
-                                                {action.label}
-                                                <action.icon className="w-5 h-5 opacity-50" />
-                                            </button>
-                                        ))}
+                            ) : (
+                                <div className="bg-white rounded-[2.5rem] p-10 border border-slate-100 shadow-sm flex flex-col md:flex-row items-center gap-8 group">
+                                    <div className="w-24 h-24 rounded-3xl bg-cyan-50 flex items-center justify-center group-hover:scale-110 transition-transform duration-500">
+                                        <Eraser className="w-12 h-12 text-cyan-600" />
                                     </div>
-                                    <div className="mt-8 p-6 bg-slate-900 rounded-3xl text-white relative overflow-hidden group">
-                                        <div className="absolute inset-0 bg-gradient-to-br from-cyan-500/20 to-transparent"></div>
-                                        <p className="text-[10px] font-black text-cyan-400 uppercase tracking-widest mb-2 relative z-10">Quick Tip</p>
-                                        <p className="text-xs font-medium text-slate-300 relative z-10 group-hover:text-white transition-colors">
-                                            Total revenue is calculated automatically based on approved reservation invoices.
+                                    <div className="flex-1 text-center md:text-left">
+                                        <h3 className="text-2xl font-black text-slate-800 mb-2">Housekeeping Portal</h3>
+                                        <p className="text-slate-500 font-medium max-w-xl">
+                                            You are logged in with Staff privileges. Please ensure all maintenance rooms are cleaned and updated in the Room Cleaning section to maintain resort standards.
                                         </p>
                                     </div>
+                                    <button 
+                                        onClick={() => navigate('/staff/room-cleaning')}
+                                        className="px-8 py-4 bg-slate-900 text-white rounded-2xl font-black hover:bg-slate-800 transition-all shadow-xl shadow-slate-200"
+                                    >
+                                        Go to Cleaning Schedule
+                                    </button>
                                 </div>
-                            </div>
+                            )}
                         </>
                     )}
                 </main>

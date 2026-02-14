@@ -6,7 +6,6 @@ import {
     UserPlus, 
     Edit2, 
     Trash2, 
-    MoreVertical, 
     Mail, 
     Shield, 
     X,
@@ -16,9 +15,11 @@ import {
 } from 'lucide-react';
 import AdminSidebar from '../components/AdminSidebar';
 import { useAuth } from '../context/AuthContext';
+import { useNavigate } from 'react-router-dom';
 
 const UserManagement = () => {
-    const { user: currentUser } = useAuth();
+    const { user: currentUser, loading: authLoading } = useAuth();
+    const navigate = useNavigate();
     const [users, setUsers] = useState([]);
     const [loading, setLoading] = useState(true);
     const [searchTerm, setSearchTerm] = useState('');
@@ -32,6 +33,12 @@ const UserManagement = () => {
     });
     const [error, setError] = useState('');
     const [success, setSuccess] = useState('');
+
+    useEffect(() => {
+        if (!authLoading && (!currentUser || (currentUser.role !== 'ADMIN' && currentUser.role !== 'STAFF'))) {
+            navigate('/login');
+        }
+    }, [currentUser, authLoading, navigate]);
 
     useEffect(() => {
         fetchUsers();
@@ -54,7 +61,7 @@ const UserManagement = () => {
             setFormData({
                 name: user.name,
                 email: user.email,
-                password: '', // Don't show password
+                password: '', 
                 role: user.role
             });
         } else {
@@ -102,10 +109,15 @@ const UserManagement = () => {
         }
     };
 
-    const filteredUsers = users.filter(u => 
-        u.name.toLowerCase().includes(searchTerm.toLowerCase()) || 
-        u.email.toLowerCase().includes(searchTerm.toLowerCase())
-    );
+    const filteredUsers = users.filter(u => {
+        const matchesSearch = u.name.toLowerCase().includes(searchTerm.toLowerCase()) || 
+                             u.email.toLowerCase().includes(searchTerm.toLowerCase());
+        
+        if (currentUser?.role === 'STAFF') {
+            return matchesSearch && u.role === 'GUEST';
+        }
+        return matchesSearch;
+    });
 
     return (
         <div className="flex bg-slate-50 min-h-screen">
@@ -115,16 +127,20 @@ const UserManagement = () => {
                         <div className="p-2 bg-cyan-100 text-cyan-600 rounded-lg">
                             <Users className="w-6 h-6" />
                         </div>
-                        <h1 className="text-2xl font-bold text-slate-800">User Management</h1>
+                        <h1 className="text-2xl font-bold text-slate-800">
+                            {currentUser?.role === 'STAFF' ? 'Guest Directory' : 'User Management'}
+                        </h1>
                     </div>
                     
-                    <button 
-                        onClick={() => handleOpenModal()}
-                        className="flex items-center gap-2 bg-slate-900 text-white px-4 py-2.5 rounded-xl font-semibold hover:bg-slate-800 transition-all shadow-lg shadow-slate-200"
-                    >
-                        <UserPlus className="w-5 h-5" />
-                        Add New User
-                    </button>
+                    {currentUser?.role === 'ADMIN' && (
+                        <button 
+                            onClick={() => handleOpenModal()}
+                            className="flex items-center gap-2 bg-slate-900 text-white px-4 py-2.5 rounded-xl font-semibold hover:bg-slate-800 transition-all shadow-lg shadow-slate-200"
+                        >
+                            <UserPlus className="w-5 h-5" />
+                            Add New User
+                        </button>
+                    )}
                 </header>
 
                 <main className="p-8">
@@ -137,7 +153,7 @@ const UserManagement = () => {
 
                     <div className="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden">
                         <div className="p-6 border-b border-slate-100 bg-slate-50/50 flex flex-col md:flex-row md:items-center justify-between gap-4">
-                            <div className="relative flex-1 max-w-md">
+                            <div className="relative flex-1 max-md">
                                 <Search className="absolute left-3 top-2.5 w-5 h-5 text-slate-400" />
                                 <input 
                                     type="text" 
@@ -148,7 +164,7 @@ const UserManagement = () => {
                                 />
                             </div>
                             <div className="flex items-center gap-2 text-sm text-slate-500 font-medium">
-                                <span>Showing {filteredUsers.length} users</span>
+                                <span>Showing {filteredUsers.length} {currentUser?.role === 'STAFF' ? 'guests' : 'users'}</span>
                             </div>
                         </div>
 
@@ -159,24 +175,24 @@ const UserManagement = () => {
                                         <th className="px-6 py-4 text-xs font-bold text-slate-500 uppercase tracking-wider">User</th>
                                         <th className="px-6 py-4 text-xs font-bold text-slate-500 uppercase tracking-wider">Role</th>
                                         <th className="px-6 py-4 text-xs font-bold text-slate-500 uppercase tracking-wider">Contact</th>
-                                        <th className="px-6 py-4 text-xs font-bold text-slate-500 uppercase tracking-wider text-right">Actions</th>
+                                        {currentUser?.role === 'ADMIN' && <th className="px-6 py-4 text-xs font-bold text-slate-500 uppercase tracking-wider text-right">Actions</th>}
                                     </tr>
                                 </thead>
                                 <tbody className="divide-y divide-slate-100">
                                     {loading ? (
                                         <tr>
-                                            <td colSpan="4" className="px-6 py-12 text-center">
+                                            <td colSpan={currentUser?.role === 'ADMIN' ? '4' : '3'} className="px-6 py-12 text-center">
                                                 <Loader2 className="w-10 h-10 animate-spin text-cyan-600 mx-auto mb-4" />
-                                                <p className="text-slate-500 animate-pulse">Loading users...</p>
+                                                <p className="text-slate-500 animate-pulse">Loading data...</p>
                                             </td>
                                         </tr>
                                     ) : filteredUsers.length === 0 ? (
                                         <tr>
-                                            <td colSpan="4" className="px-6 py-12 text-center">
+                                            <td colSpan={currentUser?.role === 'ADMIN' ? '4' : '3'} className="px-6 py-12 text-center">
                                                 <div className="bg-slate-50 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4 text-slate-400">
                                                     <Search className="w-8 h-8" />
                                                 </div>
-                                                <p className="text-slate-500">No users found matching your search.</p>
+                                                <p className="text-slate-500">No matching entries found.</p>
                                             </td>
                                         </tr>
                                     ) : (
@@ -209,29 +225,29 @@ const UserManagement = () => {
                                                         {u.email}
                                                     </div>
                                                 </td>
-                                                <td className="px-6 py-4 text-right">
-                                                    <div className="flex items-center justify-end gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
-                                                        <button 
-                                                            onClick={() => handleOpenModal(u)}
-                                                            className="p-2 text-slate-400 hover:text-cyan-600 hover:bg-cyan-50 rounded-lg transition-all"
-                                                            title="Edit User"
-                                                        >
-                                                            <Edit2 className="w-5 h-5" />
-                                                        </button>
-                                                        <button 
-                                                            onClick={() => handleDelete(u.id)}
-                                                            disabled={u.id === currentUser?.id}
-                                                            className={`p-2 rounded-lg transition-all ${
-                                                                u.id === currentUser?.id 
-                                                                ? 'text-slate-200 cursor-not-allowed' 
-                                                                : 'text-slate-400 hover:text-red-600 hover:bg-red-50'
-                                                            }`}
-                                                            title={u.id === currentUser?.id ? "You cannot delete yourself" : "Delete User"}
-                                                        >
-                                                            <Trash2 className="w-5 h-5" />
-                                                        </button>
-                                                    </div>
-                                                </td>
+                                                {currentUser?.role === 'ADMIN' && (
+                                                    <td className="px-6 py-4 text-right">
+                                                        <div className="flex items-center justify-end gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
+                                                            <button 
+                                                                onClick={() => handleOpenModal(u)}
+                                                                className="p-2 text-slate-400 hover:text-cyan-600 hover:bg-cyan-50 rounded-lg transition-all"
+                                                            >
+                                                                <Edit2 className="w-5 h-5" />
+                                                            </button>
+                                                            <button 
+                                                                onClick={() => handleDelete(u.id)}
+                                                                disabled={u.id === currentUser?.id}
+                                                                className={`p-2 rounded-lg transition-all ${
+                                                                    u.id === currentUser?.id 
+                                                                    ? 'text-slate-200 cursor-not-allowed' 
+                                                                    : 'text-slate-400 hover:text-red-600 hover:bg-red-50'
+                                                                }`}
+                                                            >
+                                                                <Trash2 className="w-5 h-5" />
+                                                            </button>
+                                                        </div>
+                                                    </td>
+                                                )}
                                             </tr>
                                         ))
                                     )}
@@ -244,8 +260,8 @@ const UserManagement = () => {
 
             <AdminSidebar />
 
-            {/* User Modal */}
-            {isModalOpen && (
+            {/* User Modal - Restrict to ADMIN */}
+            {isModalOpen && currentUser?.role === 'ADMIN' && (
                 <div className="fixed inset-0 z-[60] flex items-center justify-center p-4">
                     <div className="absolute inset-0 bg-slate-900/40 backdrop-blur-sm" onClick={() => setIsModalOpen(false)}></div>
                     <div className="bg-white rounded-3xl w-full max-w-lg shadow-2xl relative animate-in fade-in zoom-in-95 duration-200 overflow-hidden">
@@ -255,70 +271,52 @@ const UserManagement = () => {
                                 <X className="w-6 h-6" />
                             </button>
                         </div>
-
                         <form onSubmit={handleSubmit} className="p-8 space-y-6">
-                            {error && (
-                                <div className="p-4 bg-red-50 text-red-600 rounded-xl text-sm flex items-start gap-2 border border-red-100">
-                                    <AlertCircle className="w-5 h-5 mt-0.5" />
-                                    <span>{error}</span>
-                                </div>
-                            )}
-
-                            <div className="grid grid-cols-2 gap-6">
-                                <div className="col-span-2">
-                                    <label className="block text-sm font-semibold text-slate-700 mb-2">Full Name</label>
-                                    <input 
-                                        type="text" 
-                                        required
-                                        value={formData.name}
-                                        onChange={(e) => setFormData({...formData, name: e.target.value})}
-                                        className="w-full px-4 py-3 rounded-xl border border-slate-200 focus:border-cyan-500 focus:ring-4 focus:ring-cyan-500/10 transition-all outline-none"
-                                        placeholder="John Doe"
-                                    />
-                                </div>
-
-                                <div className="col-span-2">
-                                    <label className="block text-sm font-semibold text-slate-700 mb-2">Email Address</label>
-                                    <input 
-                                        type="email" 
-                                        required
-                                        value={formData.email}
-                                        onChange={(e) => setFormData({...formData, email: e.target.value})}
-                                        className="w-full px-4 py-3 rounded-xl border border-slate-200 focus:border-cyan-500 focus:ring-4 focus:ring-cyan-500/10 transition-all outline-none"
-                                        placeholder="john@example.com"
-                                    />
-                                </div>
-
-                                <div>
-                                    <label className="block text-sm font-semibold text-slate-700 mb-2">Role</label>
-                                    <select 
-                                        value={formData.role}
-                                        onChange={(e) => setFormData({...formData, role: e.target.value})}
-                                        className="w-full px-4 py-3 rounded-xl border border-slate-200 focus:border-cyan-500 focus:ring-4 focus:ring-cyan-500/10 transition-all outline-none bg-white font-medium"
-                                    >
-                                        <option value="GUEST">Guest</option>
-                                        <option value="STAFF">Staff</option>
-                                        <option value="ADMIN">Admin</option>
-                                    </select>
-                                </div>
-
-                                <div>
-                                    <label className="block text-sm font-semibold text-slate-700 mb-2">
-                                        {editingUser ? 'New Password' : 'Password'}
-                                    </label>
-                                    <input 
-                                        type="password" 
-                                        required={!editingUser}
-                                        value={formData.password}
-                                        onChange={(e) => setFormData({...formData, password: e.target.value})}
-                                        className="w-full px-4 py-3 rounded-xl border border-slate-200 focus:border-cyan-500 focus:ring-4 focus:ring-cyan-500/10 transition-all outline-none"
-                                        placeholder="••••••••"
-                                    />
-                                    {editingUser && <p className="text-[10px] text-slate-400 mt-1 italic">Leave blank to keep current password</p>}
-                                </div>
+                            <div>
+                                <label className="block text-sm font-semibold text-slate-700 mb-2">Full Name</label>
+                                <input 
+                                    type="text" 
+                                    required
+                                    value={formData.name}
+                                    onChange={(e) => setFormData({...formData, name: e.target.value})}
+                                    className="w-full px-4 py-3 rounded-xl border border-slate-200 focus:border-cyan-500 focus:ring-4 focus:ring-cyan-500/10 transition-all outline-none"
+                                />
                             </div>
-
-                            <div className="flex gap-3 pt-4">
+                            <div>
+                                <label className="block text-sm font-semibold text-slate-700 mb-2">Email Address</label>
+                                <input 
+                                    type="email" 
+                                    required
+                                    value={formData.email}
+                                    onChange={(e) => setFormData({...formData, email: e.target.value})}
+                                    className="w-full px-4 py-3 rounded-xl border border-slate-200 focus:border-cyan-500 focus:ring-4 focus:ring-cyan-500/10 transition-all outline-none"
+                                />
+                            </div>
+                            <div>
+                                <label className="block text-sm font-semibold text-slate-700 mb-2">
+                                    {editingUser ? 'New Password (leave blank to keep current)' : 'Password'}
+                                </label>
+                                <input 
+                                    type="password" 
+                                    required={!editingUser}
+                                    value={formData.password}
+                                    onChange={(e) => setFormData({...formData, password: e.target.value})}
+                                    className="w-full px-4 py-3 rounded-xl border border-slate-200 focus:border-cyan-500 focus:ring-4 focus:ring-cyan-500/10 transition-all outline-none"
+                                />
+                            </div>
+                            <div>
+                                <label className="block text-sm font-semibold text-slate-700 mb-2">User Role</label>
+                                <select 
+                                    value={formData.role}
+                                    onChange={(e) => setFormData({...formData, role: e.target.value})}
+                                    className="w-full px-4 py-3 rounded-xl border border-slate-200 focus:border-cyan-500 focus:ring-4 focus:ring-cyan-500/10 transition-all outline-none bg-white font-medium"
+                                >
+                                    <option value="GUEST">Guest</option>
+                                    <option value="STAFF">Staff</option>
+                                    <option value="ADMIN">Admin</option>
+                                </select>
+                            </div>
+                            <div className="flex gap-4 pt-4">
                                 <button 
                                     type="button"
                                     onClick={() => setIsModalOpen(false)}
@@ -328,7 +326,7 @@ const UserManagement = () => {
                                 </button>
                                 <button 
                                     type="submit"
-                                    className="flex-1 px-6 py-3 rounded-xl font-bold text-white bg-slate-900 hover:bg-slate-800 transition-all shadow-lg shadow-slate-200 flex items-center justify-center gap-2"
+                                    className="flex-1 px-6 py-3 rounded-xl font-bold text-white bg-cyan-600 hover:bg-cyan-700 transition-all shadow-lg shadow-cyan-200"
                                 >
                                     {editingUser ? 'Save Changes' : 'Create User'}
                                 </button>
