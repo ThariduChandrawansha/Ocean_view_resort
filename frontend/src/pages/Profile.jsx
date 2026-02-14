@@ -143,9 +143,7 @@ const Profile = () => {
                                 </p>
                             </div>
                             <div className="mt-8 md:mt-0 flex gap-4">
-                                <button className="flex items-center gap-2 px-6 py-3 bg-white border border-slate-200 rounded-2xl text-slate-600 hover:bg-slate-50 transition-all font-bold text-sm shadow-sm active:scale-95">
-                                    <Edit2 className="w-4 h-4" /> Edit Profile
-                                </button>
+                               
                                 <button 
                                     onClick={logout}
                                     className="flex items-center gap-2 px-6 py-3 bg-rose-50 border border-rose-100 rounded-2xl text-rose-600 hover:bg-rose-100 transition-all font-bold text-sm shadow-sm active:scale-95"
@@ -157,7 +155,7 @@ const Profile = () => {
 
                         {/* Tabs */}
                         <div className="flex gap-2 p-1 bg-slate-100 w-fit rounded-2xl">
-                            {['Overview', 'My Bookings', 'Settings'].map((tab) => (
+                            {['Overview', 'My Bookings'].map((tab) => (
                                 <button
                                     key={tab}
                                     onClick={() => setActiveTab(tab.toLowerCase())}
@@ -194,12 +192,7 @@ const Profile = () => {
                                         </div>
                                     </div>
                                 </div>
-                                <div className="space-y-2">
-                                    <p className="text-[10px] text-slate-400 uppercase tracking-widest">Registered</p>
-                                    <p className="text-slate-800 flex items-center gap-2">
-                                        <Calendar className="w-4 h-4 text-cyan-500" /> Feb 2024
-                                    </p>
-                                </div>
+                           
                                 <div className="space-y-2 text-sm">
                                     <p className="text-[10px] text-slate-400 uppercase tracking-widest">Total Stays</p>
                                     <p className="text-slate-800">{reservations.filter(r => r.status === 'COMPLETED').length} Completed Trips</p>
@@ -207,14 +200,7 @@ const Profile = () => {
                             </div>
                         </div>
 
-                        <div className="bg-slate-900 rounded-[2.5rem] p-8 text-white relative overflow-hidden group">
-                            <div className="absolute -top-10 -right-10 w-40 h-40 bg-cyan-600/20 rounded-full blur-3xl group-hover:scale-150 transition-transform duration-700"></div>
-                            <h3 className="text-xl font-black mb-2 relative z-10">Premium Concierge</h3>
-                            <p className="text-slate-400 text-sm mb-6 leading-relaxed relative z-10">Our luxury assistants are ready to handle your transport or dining requests.</p>
-                            <button className="w-full px-6 py-4 bg-white/10 hover:bg-white/20 border border-white/10 rounded-2xl font-black text-sm transition-all relative z-10">
-                                Contact Private Desk
-                            </button>
-                        </div>
+                       
                     </div>
 
                     {/* Main Content */}
@@ -287,33 +273,7 @@ const Profile = () => {
                                     </div>
                                 </div>
                                 
-                                <div className="bg-white rounded-[2.5rem] shadow-xl shadow-slate-200/50 border border-slate-100 p-10">
-                                    <h3 className="text-2xl font-black text-slate-900 mb-8 flex items-center gap-3">
-                                        <Clock className="w-6 h-6 text-cyan-600" /> Recent Activity
-                                    </h3>
-                                    <div className="space-y-6">
-                                         <div className="flex items-start gap-4 pb-6 border-b border-slate-50">
-                                            <div className="p-3 bg-cyan-50 rounded-2xl text-cyan-600">
-                                                <FileText className="w-5 h-5" />
-                                            </div>
-                                            <div>
-                                                <p className="text-slate-900 font-bold">Booking Update</p>
-                                                <p className="text-slate-500 text-sm">Your reservation status for Sea View Suite was updated.</p>
-                                                <p className="text-slate-400 text-[10px] uppercase font-black tracking-widest mt-2">2 hours ago</p>
-                                            </div>
-                                         </div>
-                                         <div className="flex items-start gap-4">
-                                            <div className="p-3 bg-emerald-50 rounded-2xl text-emerald-600">
-                                                <Shield className="w-5 h-5" />
-                                            </div>
-                                            <div>
-                                                <p className="text-slate-900 font-bold">Security Login</p>
-                                                <p className="text-slate-500 text-sm">Successful login from a new Chrome browser on Windows.</p>
-                                                <p className="text-slate-400 text-[10px] uppercase font-black tracking-widest mt-2">6 hours ago</p>
-                                            </div>
-                                         </div>
-                                    </div>
-                                </div>
+                           
                             </div>
                         )}
                         
@@ -356,8 +316,8 @@ const Profile = () => {
             {isPaymentModalOpen && (
                 <div className="fixed inset-0 z-[100] flex items-center justify-center p-4">
                     <div className="absolute inset-0 bg-slate-900/60 backdrop-blur-md" onClick={() => setIsPaymentModalOpen(false)}></div>
-                    <div className="bg-white w-full max-w-lg rounded-[3rem] shadow-2xl relative z-10 overflow-hidden animate-in zoom-in-95 duration-300">
-                        <div className="p-10">
+                    <div className="bg-white w-full max-w-lg rounded-[3rem] shadow-2xl relative z-10 flex flex-col max-h-[90vh] overflow-hidden animate-in zoom-in-95 duration-300">
+                        <div className="p-10 overflow-y-auto">
                             <div className="flex justify-between items-center mb-10">
                                 <div className="flex items-center gap-4">
                                     <div className="p-3 bg-cyan-600 text-white rounded-2xl">
@@ -464,8 +424,8 @@ const Profile = () => {
             {isInvoiceModalOpen && viewingInvoice && (
                 <div className="fixed inset-0 z-[100] flex items-center justify-center p-4">
                     <div className="absolute inset-0 bg-slate-900/60 backdrop-blur-md" onClick={() => setIsInvoiceModalOpen(false)}></div>
-                    <div className="bg-white w-full max-w-4xl rounded-[3rem] shadow-2xl relative z-10 overflow-hidden animate-in zoom-in-95 duration-300">
-                        <div className="p-10 print:p-0">
+                    <div className="bg-white w-full max-w-4xl rounded-[3rem] shadow-2xl relative z-10 flex flex-col max-h-[90vh] overflow-hidden animate-in zoom-in-95 duration-300">
+                        <div className="p-10 print:p-0 overflow-y-auto">
                             {/* Toolbar */}
                             <div className="flex justify-between items-center mb-10 print:hidden">
                                 <h3 className="text-2xl font-black text-slate-900">Digital Statement</h3>
