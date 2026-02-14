@@ -1,6 +1,10 @@
 import { Palmtree, Users, ShieldCheck, Heart, Map, Clock, Star, ArrowRight } from 'lucide-react';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
+import resortHeritage1 from '../assets/resort_heritage_1_1771077225729.jpg';
+import resortHeritage2 from '../assets/resort_heritage_2_1771077185789.jpg';
+import resortExteriorElite from '../assets/resort_exterior_elite_1771077046898.jpg';
+import resortLuxuryPool from '../assets/resort_luxury_pool_2_1771077252585.jpg';
 
 const About = () => {
   return (
@@ -11,8 +15,8 @@ const About = () => {
       <section className="relative pt-32 pb-40 overflow-hidden">
         <div className="absolute inset-0 z-0">
           <img 
-            src="https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80" 
-            className="w-full h-full object-cover opacity-10"
+            src={resortExteriorElite} 
+            className="w-full h-full object-cover opacity-120"
             alt="Beach background"
           />
           <div className="absolute inset-0 bg-gradient-to-b from-white via-white/50 to-slate-50"></div>
@@ -40,7 +44,7 @@ const About = () => {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-20 items-center">
             <div className="relative">
               <div className="rounded-[4rem] overflow-hidden shadow-2xl relative z-10 border-[12px] border-white">
-                <img src="https://images.unsplash.com/photo-1571003123894-1f0594d2b5d9?ixlib=rb-4.0.3&auto=format&fit=crop&w=2049&q=80" alt="Resort aerial" className="w-full aspect-[4/5] object-cover" />
+                <img src={resortHeritage1} alt="Resort aerial" className="w-full aspect-[4/5] object-cover" />
               </div>
               <div className="absolute -bottom-10 -right-10 w-64 h-64 bg-cyan-500 rounded-[3rem] -z-10 shadow-2xl shadow-cyan-200 animate-pulse"></div>
             </div>
