@@ -8,6 +8,10 @@ import {
 } from 'lucide-react';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
+import resortHeritage1 from '../assets/resort_heritage_1_1771077225729.jpg';
+import resortHeritage2 from '../assets/resort_heritage_2_1771077185789.jpg';
+import resortExteriorElite from '../assets/resort_exterior_elite_1771077046898.jpg';
+import resortLuxuryPool from '../assets/resort_luxury_pool_2_1771077252585.jpg';
 
 const Landing = () => {
     const navigate = useNavigate();
@@ -110,7 +114,7 @@ const Landing = () => {
                     <div className="relative h-[600px] hidden lg:block perspective-1000 group">
                         <div className="absolute inset-0 bg-gradient-to-tr from-cyan-400/20 to-blue-600/20 rounded-[4rem] rotate-6 scale-105 blur-3xl opacity-50 group-hover:rotate-12 transition-all duration-1000"></div>
                         <img 
-                            src="https://images.unsplash.com/photo-1571896349842-33c89424de2d?auto=format&fit=crop&q=80&w=2000" 
+                            src={resortExteriorElite} 
                             alt="Luxury Pool" 
                             className="relative w-full h-full object-cover rounded-[3.5rem] shadow-2xl border-[12px] border-white transform group-hover:-translate-y-4 transition-transform duration-700"
                         />
@@ -134,10 +138,10 @@ const Landing = () => {
                     <div className="grid lg:grid-cols-2 gap-20 items-center">
                         <div className="relative order-2 lg:order-1">
                             <div className="grid grid-cols-2 gap-4">
-                                <img src="https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?auto=format&fit=crop&q=80&w=800" alt="Resort 1" className="rounded-[2rem] shadow-xl translate-y-8" />
-                                <img src="https://images.unsplash.com/photo-1544124499-523c03632f77?auto=format&fit=crop&q=80&w=800" alt="Resort 2" className="rounded-[2rem] shadow-xl -translate-y-8" />
+                                <img src={resortHeritage1} alt="Resort 1" className="rounded-[2rem] shadow-xl translate-y-8" />
+                                <img src={resortHeritage2} alt="Resort 2" className="rounded-[2rem] shadow-xl -translate-y-8" />
                             </div>
-                            <div className="absolute inset-0 bg-gradient-to-t from-slate-50 via-transparent to-transparent"></div>
+                            
                         </div>
                         <div className="space-y-8 order-1 lg:order-2">
                             <h4 className="text-cyan-600 font-black uppercase tracking-[0.3em] text-sm">Our Heritage</h4>
@@ -193,13 +197,13 @@ const Landing = () => {
                             <div key={room.id} className="group relative bg-white rounded-[2.5rem] border border-slate-100 shadow-xl shadow-slate-200/50 overflow-hidden hover:shadow-2xl hover:shadow-cyan-900/10 transition-all duration-500">
                                 <div className="h-72 overflow-hidden relative">
                                     <img 
-                                        src={room.image || `https://images.unsplash.com/photo-1611892440504-42a792e24d32?auto=format&fit=crop&q=80&w=1000`} 
+                                        src={room.image1 || `https://images.unsplash.com/photo-1611892440504-42a792e24d32?auto=format&fit=crop&q=80&w=1000`} 
                                         alt={room.name}
                                         className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" 
                                     />
                                     <div className="absolute top-6 right-6">
                                         <div className="bg-white/90 backdrop-blur-md px-4 py-2 rounded-2xl shadow-lg border border-white/20">
-                                            <p className="text-sm font-black text-slate-900">LKR {room.price?.toLocaleString()}<span className="text-[10px] text-slate-400 uppercase tracking-tighter">/Night</span></p>
+                                            <p className="text-sm font-black text-slate-900">LKR {room.rate?.toLocaleString()}<span className="text-[10px] text-slate-400 uppercase tracking-tighter">/Night</span></p>
                                         </div>
                                     </div>
                                 </div>
@@ -231,7 +235,10 @@ const Landing = () => {
             <section className="py-20 relative px-6 overflow-hidden">
                 <div className="container mx-auto">
                     <div className="relative bg-slate-900 rounded-[3.5rem] p-12 md:p-24 overflow-hidden group">
-                        <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1540518614846-7eded433c457?auto=format&fit=crop&q=80&w=2000')] opacity-20 group-hover:scale-105 transition-transform duration-[20s]"></div>
+                        <div 
+                            className="absolute inset-0 opacity-20 group-hover:scale-105 transition-transform duration-[20s] bg-cover bg-center"
+                            style={{ backgroundImage: `url(${resortLuxuryPool})` }}
+                        ></div>
                         <div className="absolute inset-0 bg-gradient-to-r from-slate-900 via-slate-900/80 to-transparent"></div>
                         
                         <div className="relative z-10 grid lg:grid-cols-2 gap-12 items-center">
